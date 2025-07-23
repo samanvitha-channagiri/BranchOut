@@ -1,10 +1,13 @@
 import jwt from 'jsonwebtoken'
 import User from '../models/user.model.js'
 
-export const protect=async(req ,res ,next)=>{
+ const protect=async(req ,res ,next)=>{
 
     try{
+        console.log(req.cookies);
+        
         const token=req.cookies.jwt;
+        console.log(token)
         if(!token){
             return res.status(401).json({message:'User is not authorized'})
         }
@@ -30,3 +33,5 @@ export const protect=async(req ,res ,next)=>{
   
    
 }
+
+export default protect;

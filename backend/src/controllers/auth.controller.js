@@ -103,3 +103,20 @@ export const logout=async(req,res)=>{
   res.status(200).json({ success: true, message: "Logout successful" });
 
 }
+
+export const userInfo=async(req,res)=>{
+
+  const user=req.user;
+  if(!user){
+    return res.staus(400).json({message:"User is not authenticated"});
+
+  }
+  return res.json({
+     _id:user._id,
+            username:user.username,
+            profilePictureUrl:user.profilePictureUrl,
+            title:user.title,
+            description:user.description,
+
+  })
+}

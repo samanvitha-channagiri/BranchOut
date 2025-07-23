@@ -1,7 +1,12 @@
 
 import express from 'express'
+import {getAllLinks} from '../controllers/link.controller.js'
 const router=express.Router()
 
+router.get('/:username',getAllLinks);
 
 
-router.post('/addLink',protectRoute,addLink);
+export default router;
+
+
+
