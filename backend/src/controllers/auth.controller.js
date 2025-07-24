@@ -4,7 +4,7 @@ import generateToken from '../utils/generateToken.js';
 
 export const  signup=async(req,res)=>{
   try{
-    console.log("I've entered signup function")
+    console.log(req.body)
     const {username, email,password}=req.body;
 
     if(!username||!email||!password){
@@ -32,8 +32,8 @@ export const  signup=async(req,res)=>{
         const token=generateToken(user._id)
           res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      httpOnly: true, // prevent XSS attacks,
-      sameSite: "strict", // prevent CSRF attacks
+      httpOnly: true,
+      sameSite: "strict", 
       secure: process.env.NODE_ENV === "production",
     });
         if(user){
