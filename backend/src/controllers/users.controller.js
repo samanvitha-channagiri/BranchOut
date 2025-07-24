@@ -40,7 +40,29 @@ export const addLink = async (req, res) => {
   }
 };
 
-export const deleteLink = async (req, res) => {};
-export const updateLink = async (req, res) => {};
+export const deleteLink = async (req, res) => {
+  const user=req.user;
+  const {link,_id}=req.body;
+   
 
-export const updateProfile = async (req, res) => {};
+
+};
+export const getLinks=async(req,res)=>{
+  const user=req.user;
+  const links=await Link.find({userId:user._id})
+  console.log('Ive come here')
+  console.log(links)
+  if(!links){
+    return res.status(400).json({success:false,message:"No links found"})
+  }
+  return res.status(200).json({
+    urls:links
+  })
+}
+export const updateLink = async (req, res) => {
+
+};
+
+export const updateProfile = async (req, res) => {
+  
+};
