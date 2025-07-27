@@ -4,7 +4,7 @@ import generateToken from '../utils/generateToken.js';
 
 export const  signup=async(req,res)=>{
   try{
-    console.log(req.body)
+ 
     const {username, email,password}=req.body;
 
     if(!username||!email||!password){
@@ -16,7 +16,7 @@ export const  signup=async(req,res)=>{
          if (username.length < 3) {
             return res.status(400).json({ message: 'Username must be at least 3 characters long' });
         }
-         console.log("I've come here till saving");
+        
          
          const userExists = await User.findOne({ $or: [{ email }, { username }] });
 

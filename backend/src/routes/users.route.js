@@ -5,10 +5,10 @@ const router=express.Router()
 
 
 router.post('/addLink',addLink);
-router.post('/updateLink',updateLink)
+router.post('/updateLink/:id',updateLink)
 router.post('/updateProfile',updateProfile)
 router.get('/getLinks',getLinks)
-router.delete('/deleteLink',deleteLink)
+router.delete('/deleteLink/:id',deleteLink)
 
 
 export default router;

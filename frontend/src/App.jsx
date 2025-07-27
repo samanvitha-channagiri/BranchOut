@@ -9,6 +9,7 @@ import LinksPage from './pages/LinksPage'
 import './App.css'
 import NavBar from './components/LandingPage/NavBar'
 import toast from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
@@ -24,11 +25,14 @@ function App() {
    
     <Route path='/signup' element={<SignUpPage/>}/>
     <Route path='/login' element={<LoginPage/>}/>
+    <Route path='/admin' element={<AdminPage/>}/>
+    
 
 
     
 
   </Routes>
+  <Toaster/>
   </div>
   )
 }

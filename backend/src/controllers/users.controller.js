@@ -150,6 +150,41 @@ export const updateLink = async (req, res) => {
 };
 
 //TODO:update profile
-export const updateProfile = async (req, res) => {};
+export const updateProfile = async (req, res) => {
 
-export const addProfileInfo = async (req, res) => {};
+  try{
+    const allowedFields = ["profilePictureUrl", "title", "description"];
+    const user = req.user;
+
+    allowedFields.forEach((field) => {
+      if (req.body[field] !== undefined) {
+        user[field] = req.body[field];
+      }
+    });
+    
+    await user.save();
+
+ return res.status(200).json({
+      success: true,
+      message: "User profile updated successfully",
+      data: user
+    });
+  }catch(error){
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error while updating profile"
+    });
+  }
+ 
+ 
+
+  
+
+
+
+};
+
+export const addProfileInfo = async (req, res) => {
+
+
+};
