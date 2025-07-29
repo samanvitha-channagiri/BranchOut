@@ -21,10 +21,17 @@ function App() {
     {/* <button onClick={()=>toast.success("congrats")}> Click me</button> */}
    
   <Routes>
+
+    {/* Landing Page */}
     <Route path='/' element={<LandingPage2/>}/>
+
+    {/* public routes */}
    
     <Route path='/signup' element={<SignUpPage/>}/>
     <Route path='/login' element={<LoginPage/>}/>
+    <Route path='' element={<LinksPage/>}/>
+
+     {/* Protected routes */}
     <Route path='/admin' element={<AdminPage/>}/>
     
 

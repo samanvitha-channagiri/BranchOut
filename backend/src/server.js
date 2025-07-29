@@ -10,14 +10,15 @@ import { connectDB } from "./config/db.config.js";
 import protect from "./middlewares/protect.middleware.js";
 
 const app = express();
-connectDB();
-
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5174",
     credentials: true,
   })
 );
+connectDB();
+
+
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
