@@ -108,21 +108,38 @@ export const login=async (req,res)=>{
   console.log("Error in login controller", error.message);
     res.status(500).json({ message: "Internal Server Error" });
   }
-
 }
-
 export const logout=async(req,res)=>{
   res.clearCookie("jwt");
   res.status(200).json({ success: true, message: "Logout successful" });
 
 }
+export const checkAuthentication=async(req,res)=>{
+  console.log(" I am atleast being called")
+  try{
+    const user=req.user;
+  if(user){
+    console.log(" I am successful")
+    return res.status(200).json({
+      _id:user._id,
+      username:user.username,
+      email:user.email,
+      profilePictureUrl:user.profilePictureUrl,
+      title:user.title,
+      description:user.description,
+    })
+  }
+  }catch(error){
+    console.log("Error in the check(authentication) controller :",error.message);
+    res.status(500).json({success:false,message:"Internal server error"});
 
+  }
+  
+}
 export const userInfo=async(req,res)=>{
-
   const user=req.user;
   if(!user){
     return res.staus(400).json({message:"User is not authenticated"});
-
   }
   return res.json({
      _id:user._id,
@@ -130,6 +147,5 @@ export const userInfo=async(req,res)=>{
             profilePictureUrl:user.profilePictureUrl,
             title:user.title,
             description:user.description,
-
   })
 }

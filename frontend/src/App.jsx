@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { Routes,Route } from 'react-router'
@@ -13,7 +13,21 @@ import { Toaster } from 'react-hot-toast'
 
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
+import { useAuthStore } from './store/useAuthStore'
 function App() {
+  const {authUser,isCheckingAuth,isAuthenticated}=useAuthStore();
+  useEffect(()=>{
+    isAuthenticated();
+  },[isAuthenticated])
+
+  //if there is nothitg in the authUser, and also it is being checked if the user is authenticated, then return this load div
+  console.log(authUser)
+  if(isCheckingAuth&&!authUser){
+    return (<div className='flex items-center justify-items-center bg-darkgreen'>
+      Be patient, page is being loaded.
+
+    </div>)
+  }
   
 
   return (
@@ -27,8 +41,8 @@ function App() {
 
     {/* public routes */}
    
-    <Route path='/signup' element={<SignUpPage/>}/>
-    <Route path='/login' element={<LoginPage/>}/>
+    <Route path='/signup' element={authUser?<AdminPage/>:<SignUpPage/>}/>
+    <Route path='/login' element={authUser?<AdminPage/>:<LoginPage/>}/>
     <Route path='' element={<LinksPage/>}/>
 
      {/* Protected routes */}
