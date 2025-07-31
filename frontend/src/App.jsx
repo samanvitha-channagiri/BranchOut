@@ -10,7 +10,7 @@ import './App.css'
 import NavBar from './components/LandingPage/NavBar'
 import toast from 'react-hot-toast'
 import { Toaster } from 'react-hot-toast'
-
+import { Navigate } from 'react-router-dom'
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
 import { useAuthStore } from './store/useAuthStore'
@@ -33,6 +33,7 @@ function App() {
   return (
   <div>
     {/* <button onClick={()=>toast.success("congrats")}> Click me</button> */}
+    <NavBar/>
    
   <Routes>
 
@@ -40,10 +41,10 @@ function App() {
     <Route path='/' element={<LandingPage2/>}/>
 
     {/* public routes */}
-   
-    <Route path='/signup' element={authUser?<AdminPage/>:<SignUpPage/>}/>
+   <Route path='/signup' element={!authUser?<SignUpPage/>:<Navigate to='/admin'/>}/>
     <Route path='/login' element={authUser?<AdminPage/>:<LoginPage/>}/>
     <Route path='' element={<LinksPage/>}/>
+    <Route path='/admin' element={authUser?<AdminPage/>:<Navigate to='/signup'/>}/>
 
      {/* Protected routes */}
     <Route path='/admin' element={<AdminPage/>}/>
