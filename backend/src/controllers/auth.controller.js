@@ -3,18 +3,7 @@ import mongoose from 'mongoose'
 import generateToken from '../utils/generateToken.js';
 
 
-//TODO: login, check authentication,logout
 
-
-/*
-//check auth
-
-send the request from the browser, wrtie a controller that accepts it
-along with the request, cookies will be attached, controller, if there is proper auth, then it resturns the data,
-if the user cookies is not present in the application section, we'll get the error, then we can set the authUser data to null,
-if we get proper data, then we'll set the authUser to the gotten data.
-
-*/
 export const  signup=async(req,res)=>{
   try{
  
@@ -115,11 +104,11 @@ export const logout=async(req,res)=>{
 
 }
 export const checkAuthentication=async(req,res)=>{
-  console.log(" I am atleast being called")
+
   try{
     const user=req.user;
   if(user){
-    console.log(" I am successful")
+ 
     return res.status(200).json({
       _id:user._id,
       username:user.username,

@@ -15,6 +15,7 @@ export const addLink = async (req, res) => {
     if(!isValidURL(url)){
       return res.status(400).json({success:false,message:"Entered url is not valid"})
     }
+    
 
     const newLink = await Link.create({
       userId: _id,
@@ -45,23 +46,28 @@ export const addLink = async (req, res) => {
 
 export const deleteLink = async (req, res) => {
   try {
+    console.log("I've come here 01")
     const userId = req.user._id;
     const deleteLinkId = req.params.id;
-
+  console.log("I've come here 02")
     //trim because " ", like these empty requests
-    if (!id || typeof id !== "string" || !id.trim()) {
+    if (!deleteLinkId || typeof deleteLinkId !== "string" || !deleteLinkId.trim()) {
+      console.log("something wrong here ig")
       return res.status(400).json({
         success: false,
         message: "Link ID is required",
       });
     }
+      console.log("I've come here 03")
     if (!mongoose.Types.ObjectId.isValid(deleteLinkId)) {
       return res
         .status(400)
         .json({ success: false, message: "Invalid ID format" });
     }
+    console.log("I've come here 04")
 
     const result = await Link.deleteOne({ _id: deleteLinkId, userId });
+    console.log(result)
     if (result.deletedCount === 0) {
       return res
         .status(404)
@@ -75,6 +81,7 @@ export const deleteLink = async (req, res) => {
       .status(200)
       .json({ success: true, message: "deleting the link was successful" });
   } catch (error) {
+    console.log(error.message)
     return res
       .status(500)
       .json({ success: false, message: "internal server error" });
@@ -91,7 +98,7 @@ export const getLinks = async (req, res) => {
     urls: links,
   });
 };
-//TODO:update not completed
+
 export const updateLink = async (req, res) => {
   try {
     const user = req.user;
@@ -99,7 +106,7 @@ export const updateLink = async (req, res) => {
     const { url, title } = req.body;
     const linkId = req.params.id;
     const userId = user._id;
-    console.log(userId,linkId,title,url)
+
     if (!linkId || !url || !title) {
       return res
         .status(400)
@@ -149,7 +156,7 @@ export const updateLink = async (req, res) => {
   }
 };
 
-//TODO:update profile
+
 export const updateProfile = async (req, res) => {
 
   try{

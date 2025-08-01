@@ -21,7 +21,7 @@ function App() {
   },[isAuthenticated])
 
   //if there is nothitg in the authUser, and also it is being checked if the user is authenticated, then return this load div
-  console.log(authUser)
+ 
   if(isCheckingAuth&&!authUser){
     return (<div className='flex items-center justify-items-center bg-darkgreen'>
       Be patient, page is being loaded.

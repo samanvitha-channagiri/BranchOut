@@ -16,7 +16,7 @@ const LoginPage = () => {
     });
   const {isLoggingIn,login}=useAuthStore();
    function validateFormData(){
-    console.log("I am in validate form data")
+
     if(!formData.email.trim()){
       toast.error("Email field cannot be empty")
       return false
@@ -40,7 +40,7 @@ const LoginPage = () => {
     try{
       const success=validateFormData()
       if(success==true){
-        console.log(success)
+      
         login(formData)
       }
     }catch(error){
