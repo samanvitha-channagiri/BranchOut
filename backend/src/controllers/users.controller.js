@@ -104,8 +104,10 @@ export const updateLink = async (req, res) => {
     const user = req.user;
 
     const { url, title } = req.body;
+    
     const linkId = req.params.id;
     const userId = user._id;
+    console.log(linkId,userId)
 
     if (!linkId || !url || !title) {
       return res
@@ -116,6 +118,7 @@ export const updateLink = async (req, res) => {
         });
     }
     if (!isValidURL(url)) {
+      console.log(url)
       return res
         .status(404)
         .json({ success: false, message: "url is not valid" });
@@ -131,6 +134,7 @@ export const updateLink = async (req, res) => {
       { $set: { url: url, title } },
       { new: true, runValidators: true }
     );
+    console.log(updatedLink)
     if (!updatedLink) {
       return res.status(404).json({
         success: false,

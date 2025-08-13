@@ -16,7 +16,7 @@ import User from '../models/user.model.js'
 
         req.user=await User.findById(decoded.id).select('-password')
         if(!req.user){
-            return res.stauts(401).json({message:"User no longer exists"})
+            return res.status(401).json({message:"User no longer exists"})
 
 
         }

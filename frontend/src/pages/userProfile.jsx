@@ -6,7 +6,7 @@ const userProfile = () => {
   return (
     <div>
 
-        <form action="submit">
+        <form className='bg-black' action="submit">
            <label>Profile Url
            <input type="text" value={imgUrl} onChange={(e)=>{setImgUrl(e.target.value)}} />
 

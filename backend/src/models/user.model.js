@@ -36,12 +36,12 @@ const UserSchema = new mongoose.Schema({
     title: {
         type: String,
         maxlength: [100, 'Title cannot exceed 100 characters'], 
-        default: ''
+        default: 'Default'
     },
     description: {
         type: String,
         maxlength: [500, 'Description cannot exceed 500 characters'], 
-        default: ''
+        default: 'I am a human'
     }
     //,
     // uniqueShareSlug: { 

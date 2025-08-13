@@ -1,12 +1,12 @@
 
 
 export const errorHandler=(err,req,res,next)=>{
-    console.err('Caught by error handler :',err.stack);
+    console.error('Caught by error handler :',err.stack);
     const statusCode=err.statusCode||500;
     const message=err.message||'Internal server error'
     const errorCode=err.code||'UNKNOWN_ERROR'
 
-    res.satus(statusCode).json({
+    res.status(statusCode).json({
         success:false,
         message:message,
         code:errorCode,

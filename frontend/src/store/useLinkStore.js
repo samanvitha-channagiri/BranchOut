@@ -12,6 +12,7 @@ export const useLinkStore = create((set, get) => ({
   urls: [],
   isLinksLoading: false,
   isAddingNewUrl: false,
+  isUpdatingUrl:false,
 
   getLinks: async () => {
     set({ isLinksLoading: true });
@@ -29,12 +30,12 @@ export const useLinkStore = create((set, get) => ({
   addNewUrl: async (data) => {
     set({ isAddingNewUrl: true });
     try {
-        const res=await axiosInstance.post("/users/addLink",data)
+       const res=await axiosInstance.post("/users/addLink",data)
         console.log(res)
         toast.success("New url added successfully")
-         const currentUrls=get().urls
+        const currentUrls=get().urls
          set({urls:[...currentUrls,res.data.data]})
-
+       
        
 
     } catch (error) {
@@ -46,6 +47,27 @@ export const useLinkStore = create((set, get) => ({
     }
   },
   updateLink:async(data)=>{
+    try{
+      set({isUpdatingUrl:true})
+      const res=await axiosInstance.post(`/users/updateLink/${data._id}`,data)
+      
+     //so here somehow, I should find the updated url, and then update right? I don't need to wait for the result, I'll just parse throught the ids and update it here on frontend with present data I've
+ const currentUrls = get().urls;
+     const updatedUrls = currentUrls.map((link) =>
+        link._id === data._id
+          ? { ...link, url: data.url, title: data.title }
+          : link
+      );
+         set({urls:updatedUrls})
+   toast.success("New url added successfully")
+
+
+    }catch(error){
+      toast.error("Error while updating the url")
+
+    }finally{
+      set({isUpdatingUrl:false})
+    }
 
   },
   deleteLink:async(data)=>{

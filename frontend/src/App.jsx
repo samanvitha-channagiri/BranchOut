@@ -7,6 +7,7 @@ import LandingPage2 from './pages/LandingPage2'
 import AdminPage from './pages/AdminPage'
 import LinksPage from './pages/LinksPage'
 import './App.css'
+import userProfile from './pages/userProfile'
 import NavBar from './components/LandingPage/NavBar'
 import toast from 'react-hot-toast'
 import { Toaster } from 'react-hot-toast'
@@ -14,8 +15,9 @@ import { Navigate } from 'react-router-dom'
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
 import { useAuthStore } from './store/useAuthStore'
+
 function App() {
-  const {authUser,isCheckingAuth,isAuthenticated}=useAuthStore();
+  const {authUser,isCheckingAuth,signup,isAuthenticated}=useAuthStore();
   useEffect(()=>{
     isAuthenticated();
   },[isAuthenticated])
@@ -45,10 +47,11 @@ function App() {
     <Route path='/login' element={authUser?<AdminPage/>:<LoginPage/>}/>
     <Route path='' element={<LinksPage/>}/>
     <Route path='/admin' element={authUser?<AdminPage/>:<Navigate to='/signup'/>}/>
+   
 
      {/* Protected routes */}
     <Route path='/admin' element={<AdminPage/>}/>
-    
+     <Route path='/profile' element={authUser?<userProfile/>:<Navigate to={signup}/>}></Route>
 
 
     

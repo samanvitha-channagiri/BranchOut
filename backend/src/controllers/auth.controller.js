@@ -7,10 +7,10 @@ import generateToken from '../utils/generateToken.js';
 export const  signup=async(req,res)=>{
   try{
  
-    const {username, email,password}=req.body;
+    const {username, email,password,title}=req.body;
 
     if(!username||!email||!password){
-      return res.status(400).json({message:"No fileds can be empty"})
+      return res.status(400).json({message:"No fields can be empty"})
     }
      if (password.length < 6) {
             return res.status(400).json({ message: 'Password must be at least 6 characters long' });
@@ -128,7 +128,7 @@ export const checkAuthentication=async(req,res)=>{
 export const userInfo=async(req,res)=>{
   const user=req.user;
   if(!user){
-    return res.staus(400).json({message:"User is not authenticated"});
+    return res.status(400).json({message:"User is not authenticated"});
   }
   return res.json({
      _id:user._id,
