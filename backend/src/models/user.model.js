@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
     // },
     profilePictureUrl: {
         type: String,
-        default: 'https://via.placeholder.com/150' 
+        default: 'https://t4.ftcdn.net/jpg/13/92/21/67/240_F_1392216714_6DLfkfyqjW9D0cuh7e9VbJEt7p5ontUL.jpg' 
     },
     title: {
         type: String,

@@ -9,6 +9,7 @@ export const getAllLinks = async (req, res) => {
     if (!userExist) {
       return res.status(404).json({ message: "User not found" });
     }
+    console.log(userExist)
 
     const links = await Link.find({ userId: userExist._id });
     if (!links) {
@@ -19,6 +20,7 @@ export const getAllLinks = async (req, res) => {
       message: `Urls of the username ${username}`,
       success: true,
       data: {
+        user:{username:userExist.username,title:userExist.title,description:userExist.description,profilePictureUrl:userExist.profilePictureUrl},
         links: links,
         count: links.length,
       },

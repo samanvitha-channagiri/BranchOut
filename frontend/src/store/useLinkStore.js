@@ -30,8 +30,15 @@ export const useLinkStore = create((set, get) => ({
   addNewUrl: async (data) => {
     set({ isAddingNewUrl: true });
     try {
-       const res=await axiosInstance.post("/users/addLink",data)
-        console.log(res)
+      let url = data.url.trim();
+
+// if no scheme, assume https
+if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) {
+  url = "https://" + url;
+}
+       const res=await axiosInstance.post("/users/addLink",{...data,url})
+       console.log(res)
+   
         toast.success("New url added successfully")
         const currentUrls=get().urls
          set({urls:[...currentUrls,res.data.data]})
