@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-
+import axios from "axios";
 const UserProfile = () => {
   const { authUser, updateProfile } = useAuthStore();
 
@@ -84,7 +84,7 @@ const UserProfile = () => {
 
           <div style={{ marginBottom: "10px" }}>
             <p>
-              <strong>Username:</strong> {authUser.userName}
+              <strong>Username:</strong> {authUser.username}
             </p>
           </div>
 

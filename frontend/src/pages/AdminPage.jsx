@@ -5,6 +5,7 @@ import { axiosInstance } from "../lib/axios.js";
 import { useLinkStore } from "../store/useLinkStore.js";
 import isValidURL from "../../../backend/src/utils/urlValidation.js";
 import toast from "react-hot-toast";
+import { useAuthStore } from "../store/useAuthStore.js";
 // TODOS:
 /*
 1. User profile display, along with update, maybe make a new page, for user to update his information
@@ -20,6 +21,10 @@ const AdminPage = () => {
     updateLink
   
   } = useLinkStore();
+  const {authUser}=useAuthStore()
+  useEffect(()=>{
+    console.log("auth",authUser)
+  })
   
   const [updateUrl, setUpdateUrl] = useState({ _id: "", url: "", title: "" });
    const [isUpdatingUrl,setIsUpdatingUrl]=useState(false)
@@ -156,7 +161,7 @@ const AdminPage = () => {
         </form>
         <div>
           {urls.map((url) => (
-            <div>
+            <div id={url._id}>
               {url.title + " "+url.url+" "}
               <button className="bg-slate-500" onClick={() => deleteLink(url)}>delete</button>{" "}
               <button className="bg-slate-500" onClick={() => handleUpdateClick(url)}>update</button>

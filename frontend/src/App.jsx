@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import { Routes,Route } from 'react-router'
+import { Routes,Route, useMatch } from 'react-router'
 import LandingPage from './pages/LandingPage'
 import LandingPage2 from './pages/LandingPage2'
 import AdminPage from './pages/AdminPage'
@@ -15,8 +15,10 @@ import { Navigate } from 'react-router-dom'
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
 import { useAuthStore } from './store/useAuthStore'
+// import { useMatch } from 'react-router'
 
 function App() {
+  const matchLinksPage=useMatch('/:username');
   const {authUser,isCheckingAuth,signup,isAuthenticated}=useAuthStore();
   useEffect(()=>{
     isAuthenticated();
@@ -35,7 +37,7 @@ function App() {
   return (
   <div>
     {/* <button onClick={()=>toast.success("congrats")}> Click me</button> */}
-    <NavBar/>
+  { !matchLinksPage&& <NavBar/>}
    
   <Routes>
 

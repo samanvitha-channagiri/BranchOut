@@ -12,7 +12,8 @@ export default {
         'lightgreen':'#A3B18A'
       },
       fontFamily: {
-            'dancing-script': ['Dancing Script', 'cursive'],
+            'dancing-script': ['Dancing Script', 'cursive','Just Another Hand'],
+            'just-another-hand':['Just Another Hand','cursive']
           }
     },
   },

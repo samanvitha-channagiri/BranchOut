@@ -58,7 +58,7 @@ export const useAuthStore=create((set,get)=>({
     logout: async()=>{
         try{
              
-       const res=await  axiosInstance.post('/auth/logout')
+       const res=await axiosInstance.post('/auth/logout')
        set({authUser:null})
  
        toast.success("user logged out successfully")
@@ -71,7 +71,7 @@ export const useAuthStore=create((set,get)=>({
     updateProfile:async(data)=>{
         try{
             set({isUpdatingProfile:true})
-       const res=await axiosInstance('/users/updateProfile',data)
+       const res=await axiosInstance.post('/users/updateProfile',data)
         set({authUser:res.data})
             console.log(res)
             toast.success("Profie updated successfully")
