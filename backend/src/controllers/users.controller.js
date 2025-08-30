@@ -1,4 +1,3 @@
-import User from "../models/user.model.js";
 import Link from "../models/link.model.js";
 import mongoose from "mongoose";
 import isValidURL from "../utils/urlValidation.js";
@@ -15,8 +14,7 @@ export const addLink = async (req, res) => {
     if(!isValidURL(url)){
       return res.status(400).json({success:false,message:"Entered url is not valid"})
     }
-    
-
+  
     const newLink = await Link.create({
       userId: _id,
       title: title,

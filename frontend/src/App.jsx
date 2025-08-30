@@ -3,7 +3,6 @@ import { Routes,Route, useMatch } from 'react-router'
 import LandingPage2 from './pages/LandingPage2'
 import AdminPage from './pages/AdminPage'
 import LinksPage from './pages/LinksPage'
-import './App.css'
 import UserProfile from './pages/UserProfile'
 import NavBar from './components/LandingPage/NavBar'
 import { Toaster } from 'react-hot-toast'
@@ -42,7 +41,7 @@ function App() {
 
     {/* public routes */}
    <Route path='/signup' element={!authUser?<SignUpPage/>:<Navigate to='/admin'/>}/>
-    <Route path='/login' element={authUser?<AdminPage/>:<LoginPage/>}/>
+    <Route path='/login' element={!authUser?<LoginPage/>:<Navigate to='/admin'/>}/>
     <Route path='/:username' element={<LinksPage/>}/>
     <Route path='/admin' element={authUser?<AdminPage/>:<Navigate to='/signup'/>}/>
    
