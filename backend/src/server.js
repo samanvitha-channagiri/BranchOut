@@ -8,14 +8,21 @@ import linkRoutes from "./routes/link.route.js";
 dotenv.config();
 import { connectDB } from "./config/db.config.js";
 import protect from "./middlewares/protect.middleware.js";
-
+import rateLimit from 'express-rate-limit'
 const app = express();
+const limiter=rateLimit({
+  max: 3,
+  windowMs:60*60*1000,
+  message:"we have received too many requests from this IP. Please try after one hour"
+})
 app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
   })
 );
+
+app.use('/api',limiter)
 connectDB();
 
 
