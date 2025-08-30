@@ -127,7 +127,7 @@ const AdminPage = () => {
     <div>
       {/* User profile */}
 
-      <img src="" />
+      <img src={authUser.profilePictureUrl} className="" />
 
       <div> </div>
 

@@ -208,7 +208,6 @@ export default LinksPage
 //   sendRequest()
 //   },[username])
 // //   useEffect(() => {
-// //   console.log(userData);
 // // }, [userData]);
 
 //   return (

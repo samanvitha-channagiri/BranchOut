@@ -46,28 +46,22 @@ export const addLink = async (req, res) => {
 
 export const deleteLink = async (req, res) => {
   try {
-    console.log("I've come here 01")
     const userId = req.user._id;
     const deleteLinkId = req.params.id;
-  console.log("I've come here 02")
     //trim because " ", like these empty requests
     if (!deleteLinkId || typeof deleteLinkId !== "string" || !deleteLinkId.trim()) {
-      console.log("something wrong here ig")
       return res.status(400).json({
         success: false,
         message: "Link ID is required",
       });
     }
-      console.log("I've come here 03")
     if (!mongoose.Types.ObjectId.isValid(deleteLinkId)) {
       return res
         .status(400)
         .json({ success: false, message: "Invalid ID format" });
     }
-    console.log("I've come here 04")
 
     const result = await Link.deleteOne({ _id: deleteLinkId, userId });
-    console.log(result)
     if (result.deletedCount === 0) {
       return res
         .status(404)
@@ -107,7 +101,6 @@ export const updateLink = async (req, res) => {
     
     const linkId = req.params.id;
     const userId = user._id;
-    console.log(linkId,userId)
 
     if (!linkId || !url || !title) {
       return res
@@ -118,7 +111,6 @@ export const updateLink = async (req, res) => {
         });
     }
     if (!isValidURL(url)) {
-      console.log(url)
       return res
         .status(404)
         .json({ success: false, message: "url is not valid" });
@@ -134,7 +126,6 @@ export const updateLink = async (req, res) => {
       { $set: { url: url, title } },
       { new: true, runValidators: true }
     );
-    console.log(updatedLink)
     if (!updatedLink) {
       return res.status(404).json({
         success: false,
