@@ -9,7 +9,7 @@ export const getAllLinks = async (req, res) => {
     if (!userExist) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log(userExist)
+  
 
     const links = await Link.find({ userId: userExist._id });
     if (!links) {

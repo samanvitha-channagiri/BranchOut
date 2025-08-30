@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import { Routes,Route, useMatch } from 'react-router'
-import LandingPage from './pages/LandingPage'
 import LandingPage2 from './pages/LandingPage2'
 import AdminPage from './pages/AdminPage'
 import LinksPage from './pages/LinksPage'
 import './App.css'
 import UserProfile from './pages/UserProfile'
 import NavBar from './components/LandingPage/NavBar'
-import toast from 'react-hot-toast'
 import { Toaster } from 'react-hot-toast'
 import { Navigate } from 'react-router-dom'
 import SignUpPage from './pages/SignUpPage'
@@ -37,7 +33,7 @@ function App() {
   return (
   <div>
     {/* <button onClick={()=>toast.success("congrats")}> Click me</button> */}
-  { !matchLinksPage&& <NavBar/>}
+  {!matchLinksPage&&<NavBar/>}
    
   <Routes>
 

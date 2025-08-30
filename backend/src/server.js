@@ -11,7 +11,7 @@ import protect from "./middlewares/protect.middleware.js";
 import rateLimit from 'express-rate-limit'
 const app = express();
 const limiter=rateLimit({
-  max: 3,
+  max: 500,
   windowMs:60*60*1000,
   message:"we have received too many requests from this IP. Please try after one hour"
 })
