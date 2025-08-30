@@ -56,7 +56,16 @@ if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) {
   updateLink:async(data)=>{
     try{
       set({isUpdatingUrl:true})
-      const res=await axiosInstance.post(`/users/updateLink/${data._id}`,data)
+      console.log(data)
+
+         let url = data.url.trim();
+
+// if no scheme, assume https
+      if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) {
+        url = "https://" + url;
+      }
+
+      const res=await axiosInstance.post(`/users/updateLink/${data._id}`,{...data,url})
       
      //so here somehow, I should find the updated url, and then update right? I don't need to wait for the result, I'll just parse throught the ids and update it here on frontend with present data I've
  const currentUrls = get().urls;
