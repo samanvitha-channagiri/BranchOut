@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Routes,Route, useMatch } from 'react-router'
+import { Routes,Route } from 'react-router'
+import { useMatch } from 'react-router-dom'
 import LandingPage2 from './pages/LandingPage2'
 import AdminPage from './pages/AdminPage'
 import LinksPage from './pages/LinksPage'
@@ -10,7 +11,7 @@ import { Navigate } from 'react-router-dom'
 import SignUpPage from './pages/SignUpPage'
 import LoginPage from './pages/LoginPage'
 import { useAuthStore } from './store/useAuthStore'
-// import { useMatch } from 'react-router'
+
 
 function App() {
   const matchLinksPage=useMatch('/:username');
@@ -19,7 +20,7 @@ function App() {
     isAuthenticated();
   },[isAuthenticated])
 
-  //if there is nothitg in the authUser, and also it is being checked if the user is authenticated, then return this load div
+
  
   if(isCheckingAuth&&!authUser){
     return (<div className='flex items-center justify-items-center bg-darkgreen'>
@@ -31,7 +32,7 @@ function App() {
 
   return (
   <div>
-    {/* <button onClick={()=>toast.success("congrats")}> Click me</button> */}
+   
   {!matchLinksPage&&<NavBar/>}
    
   <Routes>

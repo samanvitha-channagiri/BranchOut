@@ -49,8 +49,8 @@ const LinksPage = () => {
       await navigator.clipboard.writeText(text);
       setCopiedId(id);
       setTimeout(() => setCopiedId(null), 1500);
-    } catch (err) {
-      // handle copy error
+    } catch (error.message) {
+      console.log("Error in handle copy function",error.message)
     }
   };
   // Copy current page URL
