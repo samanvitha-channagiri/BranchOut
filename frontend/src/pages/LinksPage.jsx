@@ -49,7 +49,7 @@ const LinksPage = () => {
       await navigator.clipboard.writeText(text);
       setCopiedId(id);
       setTimeout(() => setCopiedId(null), 1500);
-    } catch (error.message) {
+    } catch (error) {
       console.log("Error in handle copy function",error.message)
     }
   };
