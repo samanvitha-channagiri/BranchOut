@@ -12,7 +12,7 @@ export const useLinkStore = create((set, get) => ({
   urls: [],
   isLinksLoading: false,
   isAddingNewUrl: false,
-  isUpdatingUrl:false,
+  isUpdatingUrl: false,
 
   getLinks: async () => {
     set({ isLinksLoading: true });
@@ -20,7 +20,6 @@ export const useLinkStore = create((set, get) => ({
     try {
       const res = await axiosInstance.get("/users/getLinks");
       set({ urls: res.data.urls });
-      console.log(get().urls);
     } catch (error) {
       console.log("Error while fetching links :", error.message);
     } finally {
@@ -32,81 +31,61 @@ export const useLinkStore = create((set, get) => ({
     try {
       let url = data.url.trim();
 
-// if no scheme, assume https
-if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) {
-  url = "https://" + url;
-}
-       const res=await axiosInstance.post("/users/addLink",{...data,url})
-       console.log(res)
-   
-        toast.success("New url added successfully")
-        const currentUrls=get().urls
-         set({urls:[...currentUrls,res.data.data]})
-       
-       
-
-    } catch (error) {
-        toast.error("Adding new url failed")
-        console.log("error while adding a new url to the db",error.message)
-
-    }finally{
-        set({isAddingNewUrl:false})
-    }
-  },
-  updateLink:async(data)=>{
-    try{
-      set({isUpdatingUrl:true})
-      console.log(data)
-
-         let url = data.url.trim();
-
-// if no scheme, assume https
+      // if no scheme, assume https
       if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) {
         url = "https://" + url;
       }
+      const res = await axiosInstance.post("/users/addLink", { ...data, url });
 
-      const res=await axiosInstance.post(`/users/updateLink/${data._id}`,{...data,url})
-      
-     //so here somehow, I should find the updated url, and then update right? I don't need to wait for the result, I'll just parse throught the ids and update it here on frontend with present data I've
- const currentUrls = get().urls;
-     const updatedUrls = currentUrls.map((link) =>
+      toast.success("New url added successfully");
+      const currentUrls = get().urls;
+      set({ urls: [...currentUrls, res.data.data] });
+    } catch (error) {
+      toast.error("Adding new url failed");
+      console.log("error while adding a new url to the db", error.message);
+    } finally {
+      set({ isAddingNewUrl: false });
+    }
+  },
+  updateLink: async (data) => {
+    try {
+      set({ isUpdatingUrl: true });
+      let url = data.url.trim();
+      if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) {
+        url = "https://" + url;
+      }
+      const res = await axiosInstance.post(`/users/updateLink/${data._id}`, {
+        ...data,
+        url,
+      });
+      const currentUrls = get().urls;
+      const updatedUrls = currentUrls.map((link) =>
         link._id === data._id
           ? { ...link, url: data.url, title: data.title }
           : link
       );
-         set({urls:updatedUrls})
-   toast.success("New url added successfully")
-
-
-    }catch(error){
-      toast.error("Error while updating the url")
-
-    }finally{
-      set({isUpdatingUrl:false})
+      set({ urls: updatedUrls });
+      toast.success("New url added successfully");
+    } catch (error) {
+      toast.error("Error while updating the url");
+    } finally {
+      set({ isUpdatingUrl: false });
     }
-
   },
-  deleteLink:async(data)=>{
+  deleteLink: async (data) => {
+    try {
+      const res = await axiosInstance.delete(`/users/deleteLink/${data._id}`);
+      const currentUrls = get().urls;
+      const updatedUrls = currentUrls.filter((link) => link._id !== data._id);
+      set({ urls: updatedUrls });
 
-    // router.delete('/deleteLink/:id',deleteLink)
-    try{
-        const res=await axiosInstance.delete(`/users/deleteLink/${data._id}`)
-        const currentUrls=get().urls
-        console.log(res)
-        const updatedUrls=currentUrls.filter(link=>link._id!==data._id)
-        set({urls:updatedUrls})
-
-    
-    if(res.data.success===true){
-         toast.success("url deleted successfully")  
-    }else{
-        toast.error("Could not delete the url")
+      if (res.data.success === true) {
+        toast.success("url deleted successfully");
+      } else {
+        toast.error("Could not delete the url");
+      }
+    } catch (error) {
+      toast.error("error while deleteing the link");
     }
-   
-    }catch(error){
-        toast.error("error while deleteing the link")
-    }
-  
-
-  }
+  },
 }));

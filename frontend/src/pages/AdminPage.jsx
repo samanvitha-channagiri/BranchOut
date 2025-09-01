@@ -3,7 +3,7 @@ import { useLinkStore } from "../store/useLinkStore.js";
 import { useAuthStore } from "../store/useAuthStore.js";
 import isValidURL from "../../../backend/src/utils/urlValidation.js";
 import toast from "react-hot-toast";
-
+import {Link} from 'react-router'
 const AdminPage = () => {
   const {
     urls,
@@ -149,6 +149,7 @@ const AdminPage = () => {
         </div>
         
         {/* Profile Picture and Username */}
+        <Link to={'/profile'}> 
         <div className="flex flex-col items-center mt-4 mb-8">
           {authUser?.profilePictureUrl ? (
             <img
@@ -162,6 +163,8 @@ const AdminPage = () => {
           )}
           <h2 className="text-2xl font-bold text-gray-800 text-center">{authUser?.username}</h2>
         </div>
+        </Link>
+       
 
         {/* Add New Link Form */}
         <div className="px-6 mb-6">

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import axios from "axios";
+
 const UserProfile = () => {
   const { authUser, updateProfile } = useAuthStore();
 
@@ -20,81 +20,67 @@ const UserProfile = () => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px" }}>
-      {/* Profile Picture */}
-      <div style={{ marginBottom: "20px" }}>
-        <figure>
+    <div className="min-h-screen flex items-center justify-center bg-[#b0bb9c] px-2">
+      <div
+        className="bg-[#fffbe6] shadow-lg w-full max-w-2xl p-8 flex flex-col items-center"
+        style={{ borderRadius: 0 }}
+      >
+        {/* Profile Picture */}
+        <div className="mb-4">
           <img
-            src={userData.profilePictureUrl}
+            src={userData.profilePictureUrl || "https://via.placeholder.com/150?text=+"}
             alt="User Profile"
-            style={{
-              width: "150px",
-              height: "150px",
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
+            className="w-28 h-28 object-cover mb-2"
+            style={{ borderRadius: "50%" }}
+            onError={e => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150?text=+"; }}
           />
-        </figure>
-      </div>
-
-      {/* User Details */}
-      <div style={{ width: "100%", maxWidth: "500px" }}>
-        <h2 style={{ textAlign: "center" }}>User Profile</h2>
-        <form onSubmit={handleUpdateProfile}>
-          <div style={{ marginBottom: "10px" }}>
-            <label>
-              Profile Picture URL:
-              <input
-                type="text"
-                value={userData.profilePictureUrl}
-                onChange={(e) =>
-                  setUserData({ ...userData, profilePictureUrl: e.target.value })
-                }
-                style={{ marginLeft: "10px", width: "100%" }}
-              />
+        </div>
+        {/* Username */}
+        <h2 className="text-2xl font-bold italic text-center text-gray-800 mb-1 break-all">{authUser.username}</h2>
+        {/* Email */}
+        <p className="text-gray-600 mb-6 text-center break-all">{authUser.email}</p>
+        {/* Form */}
+        <form onSubmit={handleUpdateProfile} className="w-full flex flex-col gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Profile Picture URL
             </label>
+            <input
+              type="text"
+              value={userData.profilePictureUrl}
+              onChange={e => setUserData({ ...userData, profilePictureUrl: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300"
+              style={{ borderRadius: 0 }}
+            />
           </div>
-
-          <div style={{ marginBottom: "10px" }}>
-            <label>
-              Title:
-              <input
-                type="text"
-                value={userData.title}
-                onChange={(e) =>
-                  setUserData({ ...userData, title: e.target.value })
-                }
-                style={{ marginLeft: "10px", width: "100%" }}
-              />
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Title
             </label>
+            <input
+              type="text"
+              value={userData.title}
+              onChange={e => setUserData({ ...userData, title: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300"
+              style={{ borderRadius: 0 }}
+            />
           </div>
-
-          <div style={{ marginBottom: "10px" }}>
-            <label>
-              Description:
-              <textarea
-                value={userData.description}
-                onChange={(e) =>
-                  setUserData({ ...userData, description: e.target.value })
-                }
-                style={{ marginLeft: "10px", width: "100%", height: "80px" }}
-              />
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Description
             </label>
+            <textarea
+              value={userData.description}
+              onChange={e => setUserData({ ...userData, description: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300"
+              style={{ borderRadius: 0, minHeight: "80px" }}
+            />
           </div>
-
-          <div style={{ marginBottom: "10px" }}>
-            <p>
-              <strong>Username:</strong> {authUser.username}
-            </p>
-          </div>
-
-          <div style={{ marginBottom: "10px" }}>
-            <p>
-              <strong>Email:</strong> {authUser.email}
-            </p>
-          </div>
-
-          <button type="submit" style={{ marginTop: "10px", width: "100%" }}>
+          <button
+            type="submit"
+            className="bg-[#678965] text-white font-bold py-2 mt-2 w-full"
+            style={{ borderRadius: 0 }}
+          >
             Update Profile
           </button>
         </form>
