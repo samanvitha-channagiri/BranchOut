@@ -21,7 +21,7 @@ const LinksPage = () => {
       const res = await axios.get(
         `http://localhost:5003/api/links/${username}`
       );
-      console.log(res)
+      console.log(res);
       const user = res.data.data.user;
       const links = res.data.data.links;
       setUserData({
@@ -33,9 +33,9 @@ const LinksPage = () => {
       });
       setUserNotFound(false);
     } catch (error) {
-           setUserNotFound(true);
+      setUserNotFound(true);
       console.log("Error while fetching user data", error.message);
- 
+
       // handle error
     } finally {
       setIsFetchingData(false);
@@ -48,9 +48,10 @@ const LinksPage = () => {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedId(id);
+
       setTimeout(() => setCopiedId(null), 1500);
     } catch (error) {
-      console.log("Error in handle copy function",error.message)
+      console.log("Error in handle copy function", error.message);
     }
   };
   // Copy current page URL
@@ -62,9 +63,8 @@ const LinksPage = () => {
     } catch (err) {}
   };
 
-  if(userNotFound){
-    return(<DoesNotExist/>);
-
+  if (userNotFound) {
+    return <DoesNotExist />;
   }
 
   return (
