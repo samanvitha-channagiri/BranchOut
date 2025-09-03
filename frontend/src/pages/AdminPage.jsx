@@ -117,14 +117,17 @@ const AdminPage = () => {
   };
 
   const handleCopyPageUrl = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setCopiedId('page');
-      setTimeout(() => setCopiedId(null), 1500);
-    } catch (err) {
-      console.error("Failed to copy page URL:", err);
-    }
-  };
+  try {
+    const publicUrl = `${window.location.origin}/${authUser.username}`;
+    await navigator.clipboard.writeText(publicUrl);
+    setCopiedId('page');
+    toast.success(`Link to your public page copied!`);
+    setTimeout(() => setCopiedId(null), 1500);
+  } catch (err) {
+    console.error("Failed to copy page URL:", err);
+    toast.error("Failed to copy link");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#b0bb9c]">
