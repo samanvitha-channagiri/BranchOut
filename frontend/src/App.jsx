@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Routes,Route } from 'react-router'
 import { useMatch } from 'react-router-dom'
-import LandingPage2 from './pages/LandingPage2'
-import AdminPage from './pages/AdminPage'
-import LinksPage from './pages/LinksPage'
-import UserProfile from './pages/UserProfile'
-import NavBar from './components/LandingPage/NavBar'
+import LandingPage2 from './pages/LandingPage2.jsx'
+import AdminPage from './pages/AdminPage.jsx'
+import LinksPage from './pages/LinksPage.jsx'
+import UserProfile from './pages/UserProfile.jsx'
+import NavBar from './components/LandingPage/NavBar.jsx'
 import { Toaster } from 'react-hot-toast'
 import { Navigate } from 'react-router-dom'
-import SignUpPage from './pages/SignUpPage'
-import LoginPage from './pages/LoginPage'
+import SignUpPage from './pages/SignUpPage.jsx'
+import LoginPage from './pages/LoginPage.jsx'
 import { useAuthStore } from './store/useAuthStore'
 
 
@@ -48,8 +48,8 @@ function App() {
    
 
      {/* Protected routes */}
-    <Route path='/admin' element={<AdminPage/>}/>
-     <Route path='/profile' element={authUser?<UserProfile/>:<Navigate to={signup}/>}/>
+    <Route path='/admin' element={authUser?<AdminPage/>:<Navigate to='/signup'/>}/>
+     <Route path='/profile' element={authUser?<UserProfile/>:<Navigate to={'/signup'}/>}/>
 
 
     
