@@ -9,7 +9,10 @@ dotenv.config();
 import { connectDB } from "./config/db.config.js";
 import protect from "./middlewares/protect.middleware.js";
 import rateLimit from 'express-rate-limit'
+import path from 'path'
 const app = express();
+const PORT = process.env.PORT || 5003;
+const __dirname=path.resolve()
 const limiter=rateLimit({
   max: 500,
   windowMs:60*60*1000,
@@ -32,8 +35,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", protect, userRoutes);
 app.use("/api/links", linkRoutes);
 
+if(process.env.NODE_ENV==='production'){
+  app.use(express.static(path.join(__dirname,"../frontend/dist")))
+  app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"../frontend","dist","index.html"))
+  })
+}
 
-const PORT = process.env.PORT || 5003;
 app.listen(PORT, () => {
   console.log(`Server running in mode on port ${PORT}`);
 });

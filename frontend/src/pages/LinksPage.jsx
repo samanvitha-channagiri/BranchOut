@@ -18,8 +18,9 @@ const LinksPage = () => {
   async function sendRequest() {
     try {
       setIsFetchingData(true);
+      const BASE_URL=import.meta.env.MODE==='development'?'http://localhost:5003/api':'/api'
       const res = await axios.get(
-        `http://localhost:5003/api/links/${username}`
+        `${BASE_URL}/links/${username}`
       );
       console.log(res);
       const user = res.data.data.user;
