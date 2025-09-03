@@ -3,7 +3,8 @@ import { useLinkStore } from "../store/useLinkStore.js";
 import { useAuthStore } from "../store/useAuthStore.js";
 import isValidURL from "../../../backend/src/utils/urlValidation.js";
 import toast from "react-hot-toast";
-import {Link} from 'react-router'
+import { Link } from 'react-router';
+
 const AdminPage = () => {
   const {
     urls,
@@ -15,6 +16,7 @@ const AdminPage = () => {
   } = useLinkStore();
   const { authUser } = useAuthStore();
 
+  const [isAddingUrl, setIsAddingUrl] = useState(false);
   const [updateUrl, setUpdateUrl] = useState({ _id: "", url: "", title: "" });
   const [isUpdatingUrl, setIsUpdatingUrl] = useState(false);
   const [formData, setFormData] = useState({
@@ -54,8 +56,9 @@ const AdminPage = () => {
       const success = validateForm();
       if (success === true) {
         addNewUrl(formData);
+        setFormData({ url: "", title: "" });
+        setIsAddingUrl(false); // Close modal after successful submission
       }
-      setFormData({ url: "", title: "" });
     } catch (error) {
       console.log("Error while adding a new url");
     }
@@ -117,17 +120,17 @@ const AdminPage = () => {
   };
 
   const handleCopyPageUrl = async () => {
-  try {
-    const publicUrl = `${window.location.origin}/${authUser.username}`;
-    await navigator.clipboard.writeText(publicUrl);
-    setCopiedId('page');
-    toast.success(`Link to your public page copied!`);
-    setTimeout(() => setCopiedId(null), 1500);
-  } catch (err) {
-    console.error("Failed to copy page URL:", err);
-    toast.error("Failed to copy link");
-  }
-};
+    try {
+      const publicUrl = `${window.location.origin}/${authUser.username}`;
+      await navigator.clipboard.writeText(publicUrl);
+      setCopiedId('page');
+      toast.success(`Link to your public page copied!`);
+      setTimeout(() => setCopiedId(null), 1500);
+    } catch (err) {
+      console.error("Failed to copy page URL:", err);
+      toast.error("Failed to copy link");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#b0bb9c]">
@@ -153,60 +156,30 @@ const AdminPage = () => {
         
         {/* Profile Picture and Username */}
         <Link to={'/profile'}> 
-        <div className="flex flex-col items-center mt-4 mb-8">
-          {authUser?.profilePictureUrl ? (
-            <img
-              src={authUser.profilePictureUrl}
-              alt="Profile"
-              className="w-24 h-24 rounded-full object-cover mb-3"
-              onError={e => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/96?text=+'; }}
-            />
-          ) : (
-            <div className="w-24 h-24 rounded-full bg-gray-300 mb-3" />
-          )}
-          <h2 className="text-2xl font-bold text-gray-800 text-center">{authUser?.username}</h2>
-        </div>
+          <div className="flex flex-col items-center mt-4 mb-8">
+            {authUser?.profilePictureUrl ? (
+              <img
+                src={authUser.profilePictureUrl}
+                alt="Profile"
+                className="w-24 h-24 rounded-full object-cover mb-3"
+                onError={e => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/96?text=+'; }}
+              />
+            ) : (
+              <div className="w-24 h-24 rounded-full bg-gray-300 mb-3" />
+            )}
+            <h2 className="text-2xl font-bold text-gray-800 text-center">{authUser?.username}</h2>
+          </div>
         </Link>
-       
 
-        {/* Add New Link Form */}
+        {/* Add New Link Button */}
         <div className="px-6 mb-6">
-          <h3 className="text-xl font-bold text-gray-800 mb-3">Add New Link</h3>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Enter URL
-              </label>
-              <input
-                type="text"
-                value={formData.url}
-                onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300"
-                style={{ borderRadius: 0 }}
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Enter Title
-              </label>
-              <input
-                type="text"
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300"
-                style={{ borderRadius: 0 }}
-              />
-            </div>
-            
-            <button 
-              type="submit" 
-              className="bg-[#678965] text-white font-medium py-2 px-4 mt-2"
-              style={{ borderRadius: 0 }}
-            >
-              Add Link
-            </button>
-          </form>
+          <button 
+            onClick={() => setIsAddingUrl(true)}
+            className="bg-[#678965] text-white font-medium py-2 px-4 w-full"
+            style={{ borderRadius: 0 }}
+          >
+            Add New Link
+          </button>
         </div>
 
         {/* Links List */}
@@ -269,6 +242,63 @@ const AdminPage = () => {
             )}
           </div>
         </div>
+
+        {/* Add Link Modal */}
+        {isAddingUrl && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 shadow-lg max-w-md w-full" style={{ borderRadius: 0 }}>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Add New Link</h3>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Enter URL
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.url}
+                    onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300"
+                    style={{ borderRadius: 0 }}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Enter Title
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.title}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300"
+                    style={{ borderRadius: 0 }}
+                  />
+                </div>
+                
+                <div className="flex gap-3 mt-2">
+                  <button 
+                    type="submit" 
+                    className="bg-[#678965] text-white font-medium py-2 px-4 flex-1"
+                    style={{ borderRadius: 0 }}
+                  >
+                    Add Link
+                  </button>
+                  <button 
+                    type="button" 
+                    className="bg-gray-300 text-gray-800 font-medium py-2 px-4 flex-1"
+                    style={{ borderRadius: 0 }}
+                    onClick={() => {
+                      setIsAddingUrl(false);
+                      setFormData({ url: "", title: "" });
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
 
         {/* Update Link Modal */}
         {isUpdatingUrl && (
