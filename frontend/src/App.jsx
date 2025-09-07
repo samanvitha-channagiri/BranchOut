@@ -10,7 +10,7 @@ import { Toaster } from 'react-hot-toast'
 import { Navigate } from 'react-router-dom'
 import SignUpPage from './pages/SignUpPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
-import { useAuthStore } from './store/useAuthStore'
+import { useAuthStore } from './store/useAuthStore.js'
 
 
 function App() {
